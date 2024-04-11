@@ -7,14 +7,14 @@ import { RainbowKitProvider, getDefaultConfig, Theme, darkTheme } from '@rainbow
 // @ts-ignore
 import merge from 'lodash.merge';
 import { WagmiProvider } from 'wagmi';
-import { optimism, optimismSepolia } from 'wagmi/chains';
+import { optimism, optimismSepolia, baseSepolia, base } from 'wagmi/chains';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 const wagmiConfig = getDefaultConfig({
 	appName: 'Endorse',
 	projectId: '7188673890c272bd9021dd19e64c9b7e', // lgc
-	chains: [optimism, optimismSepolia],
+	chains: [optimism, optimismSepolia, baseSepolia, base],
 	ssr: true, // If your dApp uses server side rendering (SSR)
 });
 
