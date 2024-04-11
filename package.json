@@ -15,6 +15,7 @@
     "@emotion/cache": "^11.11.0",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
+    "@ethsign/sp-sdk": "^0.3.15",
     "@mui/material": "^5.15.15",
     "@mui/material-nextjs": "^5.15.11",
     "@rainbow-me/rainbowkit": "^2.0.5",
