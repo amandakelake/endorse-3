@@ -14,7 +14,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 const wagmiConfig = getDefaultConfig({
 	appName: 'Endorse',
 	projectId: '7188673890c272bd9021dd19e64c9b7e', // lgc
-	chains: [optimism, optimismSepolia, baseSepolia, base],
+	chains: [baseSepolia],
 	ssr: true, // If your dApp uses server side rendering (SSR)
 });
 
