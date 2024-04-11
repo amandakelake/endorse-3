@@ -20,7 +20,7 @@ const wagmiConfig = getDefaultConfig({
 
 declare module 'wagmi' {
 	interface Register {
-		config: typeof wagmiConfig
+		config: typeof wagmiConfig;
 	}
 }
 

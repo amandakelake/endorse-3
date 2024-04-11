@@ -1,5 +1,4 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+import styles from './page.module.css';
 import { Button, TextField } from '@mui/material';
 import Account from '@/components/account';
 
