@@ -5,10 +5,13 @@ import { Button, styled, TextField } from '@mui/material';
 import React, { useState } from 'react';
 import { createAttestation } from '@/common/signProtocol';
 import { closeGlobalLoading, openGlobalLoading } from '@/store/utils';
+import { useNetworkStore } from '@/store/network';
 
 export interface IProps {}
 
 const SignProtocol = (props: IProps) => {
+	const { chainId } = useNetworkStore();
+
 	const [name, setName] = useState('');
 	const [wallet, setWallet] = useState('');
 	const [tags, setTags] = useState<string[]>([]);
@@ -32,7 +35,7 @@ const SignProtocol = (props: IProps) => {
 		if (!name || !wallet || !tag) return;
 		try {
 			openGlobalLoading();
-			const res = await createAttestation({ name, wallet, tags: [tag] });
+			const res = await createAttestation({ name, wallet, tags: [tag] }, chainId);
 			console.log('Attestation Result', res);
 			onClear();
 		} catch (err) {
