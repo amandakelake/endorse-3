@@ -4,6 +4,7 @@
 import { Button, styled, TextField } from '@mui/material';
 import React, { useState } from 'react';
 import { createAttestation } from '@/common/signProtocol';
+import { closeGlobalLoading, openGlobalLoading } from '@/store/utils';
 
 export interface IProps {}
 
@@ -30,10 +31,14 @@ const SignProtocol = (props: IProps) => {
 	const onCreateAttestation = async () => {
 		if (!name || !wallet || !tag) return;
 		try {
+			openGlobalLoading();
 			const res = await createAttestation({ name, wallet, tags: [tag] });
 			console.log('Attestation Result', res);
 			onClear();
-		} catch (err) {}
+		} catch (err) {
+		} finally {
+			closeGlobalLoading();
+		}
 	};
 	return (
 		<FormContainer>

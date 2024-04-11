@@ -5,6 +5,8 @@ import { ThemeProvider } from '@mui/material/styles';
 import theme from '../theme';
 import './globals.css';
 import { RainbowProvider } from '@/common/provider';
+import GlobalLoading from '@/components/globalLoading';
+import React from 'react';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -23,7 +25,10 @@ export default function RootLayout({
 			<body className={inter.className}>
 				<AppRouterCacheProvider>
 					<ThemeProvider theme={theme}>
-						<RainbowProvider>{children}</RainbowProvider>
+						<RainbowProvider>
+							<GlobalLoading />
+							{children}
+						</RainbowProvider>
 					</ThemeProvider>
 				</AppRouterCacheProvider>
 			</body>
