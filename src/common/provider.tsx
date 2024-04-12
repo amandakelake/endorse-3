@@ -11,7 +11,7 @@ import { baseSepolia, opBNBTestnet } from 'wagmi/chains';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-const wagmiConfig = getDefaultConfig({
+export const wagmiConfig = getDefaultConfig({
 	appName: 'Endorse',
 	projectId: '7188673890c272bd9021dd19e64c9b7e', // lgc
 	chains: [baseSepolia, opBNBTestnet],

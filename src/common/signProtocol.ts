@@ -4,11 +4,7 @@ import { generatePrivateKey } from 'viem/accounts';
 
 const privateKey = generatePrivateKey();
 import { baseSepolia, polygonMumbai, sepolia, opBNBTestnet } from 'wagmi/chains';
-
-const client = new SignProtocolClient(SpMode.OnChain, {
-	chain: EvmChains.baseSepolia,
-	account: privateKeyToAccount(privateKey),
-});
+import { getSinger } from '@/common/etherUtils';
 
 const SchemaIdMap: Record<string, string> = {
 	// https://testnet-scan.sign.global/schema/onchain_evm_84532_0x3f
@@ -23,12 +19,18 @@ export interface IAttestationData {
 	tags: string[];
 }
 
+const client = new SignProtocolClient(SpMode.OnChain, {
+	chain: EvmChains.baseSepolia,
+	// account: privateKeyToAccount(privateKey), // can not use this, use default window.Ethereum
+});
+
 export async function createAttestation(data: IAttestationData, chainId: number) {
 	try {
 		return await client.createAttestation({
 			schemaId: SchemaIdMap[String(chainId)],
 			data,
-			indexingValue: '00001',
+			indexingValue: (Math.random() * 10000000).toFixed().toString(),
+			recipients: [data.wallet],
 		});
 	} catch (err: any) {
 		console.error('createAttestation', err);
