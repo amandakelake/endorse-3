@@ -12,9 +12,9 @@ const Tag = () => {
 		setTagName(event.target.value);
 	};
 
-	const { data: allTags } = useQuery({
-		queryKey: ['/api/tag', 'getAll'],
-		queryFn: () => fetch('/api/tag', { method: 'GET' }),
+	const { data: allTags, refetch } = useQuery({
+		queryKey: ['/api/tag/all'],
+		queryFn: () => fetch('/api/tag', { method: 'GET' }).then(res => res.json()),
 	});
 
 	const onCreateTag = async () => {
@@ -30,6 +30,7 @@ const Tag = () => {
 				headers: { 'Content-Type': 'application/json' },
 			}).then((res) => res.json());
 			setTagName('');
+			await refetch();
 			console.log('onCreateTag', res);
 		} catch (err) {
 			console.error('onCreateTag', err);
@@ -46,7 +47,7 @@ const Tag = () => {
 				onChange={handleTagNameChange}
 				placeholder={'name'}
 			/>
-			<Button variant={'contained'} onClick={onCreateTag} sx={{marginLeft: '20px'}}>
+			<Button variant={'contained'} onClick={onCreateTag} sx={{ marginLeft: '20px' }}>
 				Create Tag
 			</Button>
 		</TagContainer>
@@ -59,5 +60,5 @@ const TagContainer = styled('div')({
 	display: 'flex',
 	justifyContent: 'space-between',
 	alignItems: 'center',
-	margin: '20px 0'
-})
+	margin: '20px 0',
+});

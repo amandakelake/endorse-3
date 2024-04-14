@@ -38,6 +38,7 @@ const useSP = () => {
 	}, [parseDataList]);
 
 	return {
+		schemaId,
 		attestationList: attestationList,
 		parseDataList: parseDataList as IParsedAttestation[],
 	};

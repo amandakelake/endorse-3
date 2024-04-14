@@ -20,7 +20,8 @@ const AttestationList = () => {
 						<p>attestationId: {item.attestation.id}</p>
 						<p>name: {item.parsedData.name}</p>
 						<p>wallet: {item.parsedData.wallet}</p>
-						<p>tag: {item.parsedData.tags[0]}</p>
+						<p>tag: {item.parsedData.tags.map((tag: string) => <span key={tag}
+							style={{ marginRight: '4px' }}>{tag}</span>)}</p>
 					</AttestationItem>
 				);
 			})}
