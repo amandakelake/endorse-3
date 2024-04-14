@@ -1,0 +1,41 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  // Uses connection pooling
+  url       = env("spEndorse_PRISMA_URL")
+  // Uses direct connection, ⚠️ make sure to keep this to `POSTGRES_URL_NON_POOLING`
+  // or you'll have dangling databases from migrations
+  directUrl = env("spEndorse_URL_NON_POOLING")
+}
+
+enum Status {
+  OFFCHAIN
+  ONCHAIN
+  REVOKED
+}
+
+model Endorse {
+  id            Int     @id @default(autoincrement())
+  wallet        String  @unique
+  name          String
+  tags          Tag[]
+  status        Status  @default(OFFCHAIN)
+  attestationId String? @unique
+
+  createAt  DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deleted   Boolean  @default(false)
+}
+
+model Tag {
+  id       Int       @id @default(autoincrement())
+  name     String    @unique
+  endorses Endorse[]
+
+  createAt  DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deleted   Boolean  @default(false)
+}
