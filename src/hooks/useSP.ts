@@ -8,6 +8,7 @@ import {
 	SchemaIdMap,
 } from '@/common/sp/signProtocol';
 import { useEffect, useMemo, useState } from 'react';
+import useSWR from 'swr';
 
 const useSP = () => {
 	const { chainId } = useAccount();
@@ -16,12 +17,11 @@ const useSP = () => {
 		return chainId ? SchemaIdMap[chainId!]?.fullId : '';
 	}, [chainId]);
 
-	const { data, isLoading, refetch } = useQuery({
-		queryKey: ['queryAttestations', schemaId],
-		queryFn: () => queryAttestations({ schemaId }),
-		retry: false,
-		enabled: !!schemaId,
-	});
+	const { data } = useSWR(
+		schemaId ? `queryAttestations/${schemaId}` : null,
+		() => queryAttestations({ schemaId }),
+		{ keepPreviousData: true },
+	);
 
 	const attestationList = useMemo(() => {
 		return data?.attestations || [];

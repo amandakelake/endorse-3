@@ -16,8 +16,9 @@ import React, { useMemo, useState } from 'react';
 import { createAttestation } from '@/common/sp/signProtocol';
 import { closeGlobalLoading, openGlobalLoading } from '@/store/utils';
 import { useNetworkStore } from '@/store/network';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
 import useSP from '@/hooks/useSP';
+import useSWR, { useSWRConfig } from 'swr';
+import { getAllTags } from '@/services/tag';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -30,24 +31,19 @@ const MenuProps = {
 	},
 };
 
-export interface IProps {
-}
+export interface IProps {}
 
 const SignProtocol = (props: IProps) => {
 	const { chainId } = useNetworkStore();
-	const queryClient = useQueryClient();
 	const { schemaId } = useSP();
+	const { mutate } = useSWRConfig();
 
 	const [name, setName] = useState('');
 	const [wallet, setWallet] = useState('');
 
-	const { data } = useQuery({
-		queryKey: ['/api/tag/all'],
-		queryFn: () => fetch('/api/tag', { method: 'GET' }).then(res => res.json()),
-	});
+	const { data } = useSWR('/api/tag/all', () => getAllTags());
 
 	const allTags = useMemo(() => {
-		console.log('allTags', data);
 		// @ts-ignore
 		const tags = data ? data?.tags : [];
 		return tags as Record<string, any>[];
@@ -60,9 +56,7 @@ const SignProtocol = (props: IProps) => {
 			target: { value },
 		} = event;
 		console.log('handleChange', value);
-		setTags(
-			typeof value === 'string' ? value.split(',') : value,
-		);
+		setTags(typeof value === 'string' ? value.split(',') : value);
 	};
 
 	const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -82,7 +76,7 @@ const SignProtocol = (props: IProps) => {
 			const res = await createAttestation({ name, wallet, tags: tags }, chainId);
 			console.log('Attestation Result', res);
 			onClear();
-			await queryClient.refetchQueries({ queryKey: ['queryAttestations', schemaId] });
+			await mutate(`queryAttestations/${schemaId}`);
 		} catch (err) {
 		} finally {
 			closeGlobalLoading();
@@ -117,9 +111,12 @@ const SignProtocol = (props: IProps) => {
 					</Box>
 				)}
 				MenuProps={MenuProps}
+				placeholder={'select your endorsement'}
 			>
 				{allTags?.map((tag) => (
-					<MenuItem key={tag.id} value={tag.name}>{tag.name}</MenuItem>
+					<MenuItem key={tag.id} value={tag.name}>
+						{tag.name}
+					</MenuItem>
 				))}
 			</Select>
 			<Button variant={'contained'} onClick={onCreateAttestation} size={'large'}>

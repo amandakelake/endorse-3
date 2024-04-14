@@ -3,34 +3,25 @@
 import { Button, styled, TextField } from '@mui/material';
 import React, { useState } from 'react';
 import { closeGlobalLoading, openGlobalLoading } from '@/store/utils';
-import { useQuery } from '@tanstack/react-query';
+import { createTag, getAllTags } from '@/services/tag';
+import useSWR, { useSWRConfig } from 'swr';
 
 const Tag = () => {
+	const { mutate } = useSWRConfig();
+
 	const [tagName, setTagName] = useState('');
 
 	const handleTagNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setTagName(event.target.value);
 	};
 
-	const { data: allTags, refetch } = useQuery({
-		queryKey: ['/api/tag/all'],
-		queryFn: () => fetch('/api/tag', { method: 'GET' }).then(res => res.json()),
-	});
-
 	const onCreateTag = async () => {
 		if (!tagName) return;
 		try {
 			openGlobalLoading();
-			const data = {
-				name: tagName,
-			};
-			const res = await fetch('/api/tag', {
-				method: 'POST',
-				body: JSON.stringify(data),
-				headers: { 'Content-Type': 'application/json' },
-			}).then((res) => res.json());
+			const res = await createTag(tagName);
 			setTagName('');
-			await refetch();
+			await mutate('/api/tag/all');
 			console.log('onCreateTag', res);
 		} catch (err) {
 			console.error('onCreateTag', err);
