@@ -3,7 +3,7 @@
 
 import { Button, styled, TextField } from '@mui/material';
 import React, { useState } from 'react';
-import { createAttestation } from '@/common/signProtocol';
+import { createAttestation } from '@/common/sp/signProtocol';
 import { closeGlobalLoading, openGlobalLoading } from '@/store/utils';
 import { useNetworkStore } from '@/store/network';
 

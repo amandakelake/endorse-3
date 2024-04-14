@@ -1,10 +1,20 @@
-import { EvmChains, SignProtocolClient, SpMode } from '@ethsign/sp-sdk';
+import {
+	EvmChains,
+	SignProtocolClient,
+	SpMode,
+	IndexService,
+	AttestationResult,
+} from '@ethsign/sp-sdk';
 import { privateKeyToAccount } from 'viem/accounts';
 import { generatePrivateKey } from 'viem/accounts';
 
-const privateKey = generatePrivateKey();
+import { decodeAbiParameters } from 'viem';
+import { AttestationInfo } from '@/common/sp/indexService';
+
 import { baseSepolia, polygonMumbai, sepolia, opBNBTestnet } from 'wagmi/chains';
 import { getSinger } from '@/common/etherUtils';
+
+const privateKey = generatePrivateKey();
 
 export interface ISchema {
 	id: string;
@@ -135,11 +145,9 @@ export async function getAttestationDetail(id: string) {
 	};
 }
 
-import { decodeAbiParameters } from 'viem';
-
 export interface IParsedAttestation {
 	parsedData: Record<string, any>;
-	attestation: Record<string, any>;
+	attestation: AttestationInfo;
 }
 
 export function findAttestation(

@@ -6,14 +6,14 @@ import {
 	IParsedAttestation,
 	queryAttestations,
 	SchemaIdMap,
-} from '@/common/signProtocol';
+} from '@/common/sp/signProtocol';
 import { useEffect, useMemo, useState } from 'react';
 
 const useSP = () => {
 	const { chainId } = useAccount();
 
 	const schemaId = useMemo(() => {
-		return chainId ? SchemaIdMap[chainId!].fullId : '';
+		return chainId ? SchemaIdMap[chainId!]?.fullId : '';
 	}, [chainId]);
 
 	const { data, isLoading, refetch } = useQuery({
