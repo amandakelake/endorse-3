@@ -5,7 +5,6 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "vercel-build": "prisma generate && prisma migrate deploy && next build",
     "start": "next start",
     "format": "run-s prettier lint tsc",
     "prettier": "prettier --write 'src/**/*.{ts,tsx}'",
