@@ -88,7 +88,7 @@ const SignProtocol = (props: IProps) => {
 				variant={'outlined'}
 				value={name}
 				onChange={handleNameChange}
-				placeholder={'name'}
+				placeholder={'nickname'}
 			/>
 			<TextField
 				value={wallet}
@@ -129,6 +129,7 @@ const SignProtocol = (props: IProps) => {
 export default SignProtocol;
 
 const FormContainer = styled('div')({
+	marginTop: '40px',
 	display: 'flex',
 	flexDirection: 'column',
 	width: '100%',
