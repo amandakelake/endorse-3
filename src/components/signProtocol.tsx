@@ -120,7 +120,7 @@ const SignProtocol = (props: IProps) => {
 				))}
 			</Select>
 			<Button variant={'contained'} onClick={onCreateAttestation} size={'large'}>
-				CreateAttestation
+				Endorse
 			</Button>
 		</FormContainer>
 	);
