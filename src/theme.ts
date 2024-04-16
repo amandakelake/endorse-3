@@ -15,6 +15,15 @@ const theme = createTheme({
 	typography: {
 		fontFamily: roboto.style.fontFamily,
 	},
+	components: {
+		MuiButton: {
+			styleOverrides: {
+				root: {
+					textTransform: 'none',
+				},
+			},
+		},
+	},
 });
 
 export default theme;

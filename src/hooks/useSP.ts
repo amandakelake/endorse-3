@@ -20,7 +20,10 @@ const useSP = () => {
 	const { data } = useSWR(
 		schemaId ? `queryAttestations/${schemaId}` : null,
 		() => queryAttestations({ schemaId }),
-		{ keepPreviousData: true },
+		{
+			keepPreviousData: true,
+			refreshInterval: 10000,
+		},
 	);
 
 	const attestationList = useMemo(() => {

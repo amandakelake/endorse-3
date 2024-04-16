@@ -3,8 +3,8 @@
 import { Button, styled, TextField } from '@mui/material';
 import React, { useState } from 'react';
 import { closeGlobalLoading, openGlobalLoading } from '@/store/utils';
-import { createTag, getAllTags } from '@/services/tag';
-import useSWR, { useSWRConfig } from 'swr';
+import { createTag } from '@/services/tag';
+import { useSWRConfig } from 'swr';
 
 const Tag = () => {
 	const { mutate } = useSWRConfig();
@@ -39,7 +39,7 @@ const Tag = () => {
 				placeholder={'name'}
 			/>
 			<Button variant={'contained'} onClick={onCreateTag} sx={{ marginLeft: '20px' }}>
-				Create Tag
+				Create new Tag
 			</Button>
 		</TagContainer>
 	);
