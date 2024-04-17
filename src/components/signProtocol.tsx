@@ -184,7 +184,7 @@ const StyledFlexBox = styled('div')({
 const StyledButton = styled(LoadingButton)({
 	width: '300px',
 	height: '65px',
-	marginLeft: '20px',
+	marginLeft: '30px',
 	borderRadius: '30px',
 	background: 'linear-gradient(45deg, #5d65f9, #b064fe)',
 	color: '#fff',
