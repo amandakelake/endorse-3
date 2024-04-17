@@ -49,7 +49,8 @@ export default Tag;
 
 const TagContainer = styled('div')({
 	display: 'flex',
-	justifyContent: 'space-between',
+	padding: '20px',
+	justifyContent: 'flex-start',
 	alignItems: 'center',
 	margin: '20px 0',
 });
