@@ -21,7 +21,7 @@ const MainLayout = ({
 					height: '64px',
 					boxShadow: 'none',
 					backgroundColor: 'transparent',
-					backgroundImage: 'none'
+					backgroundImage: 'none',
 				}}
 				enableColorOnDark={true}
 			>

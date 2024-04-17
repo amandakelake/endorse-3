@@ -5,6 +5,7 @@ import {
 	Box,
 	Chip,
 	FormControl,
+	InputLabel,
 	MenuItem,
 	OutlinedInput,
 	Select,
@@ -118,11 +119,10 @@ const SignProtocol = (props: IProps) => {
 			</StyledFlexBox>
 			<StyledFlexBox>
 				<FormControl sx={{ flex: '1' }}>
+					<InputLabel id="demo-multiple-chip-label">Tag</InputLabel>
 					<Select
-						sx={{ flex: '1', borderRadius: '80px' }}
+						labelId="demo-multiple-chip-label"
 						multiple
-						displayEmpty
-						inputProps={{ 'aria-label': 'Without label' }}
 						value={tags}
 						onChange={handleChange}
 						disabled={!allTags || allTags.length === 0}
@@ -136,6 +136,14 @@ const SignProtocol = (props: IProps) => {
 						)}
 						MenuProps={MenuProps}
 						placeholder={'select your endorsement'}
+						sx={{
+							flex: '1',
+							borderRadius: '80px',
+							'& .MuiInputLabel-shrink': {
+								transform: 'translate(14px, -6px) scale(0.75)', // 调整缩小后的标签位置
+								zIndex: 1, // 确保标签在边框之上
+							},
+						}}
 					>
 						{allTags?.map((tag) => (
 							<MenuItem key={tag.id} value={tag.name}>
