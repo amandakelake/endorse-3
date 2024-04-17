@@ -13,14 +13,14 @@ const AttestationList = () => {
 	}, [attestationList]);
 
 	return (
-		<div style={{ minWidth: '800px' }}>
+		<div style={{ minWidth: '800px', marginTop: '20px' }}>
 			<h3 style={{ marginBottom: '20px' }}>All endorsements</h3>
 			{parseDataList.map((item, idx: number) => {
 				return (
 					<AttestationItem key={item.attestation.id}>
 						<div>
 							<Image
-								src={`/images/avatar/nft-avatar-${idx % 8 + 1}.png`}
+								src={`/images/avatar/nft-avatar-${(idx % 8) + 1}.png`}
 								alt={'avatar'}
 								width={40}
 								height={40}
@@ -28,7 +28,7 @@ const AttestationList = () => {
 							/>
 							<span>{item.parsedData.name}</span>
 						</div>
-						<TagContainer style={{marginTop: '10px'}}>
+						<TagContainer style={{ marginTop: '10px' }}>
 							{item.parsedData.tags.map((tag: string) => (
 								<TagItem key={tag} style={{ marginRight: '4px' }}>
 									{tag}
@@ -56,10 +56,10 @@ const AttestationItem = styled('div')({
 const TagContainer = styled('div')({
 	display: 'flex',
 	flexWrap: 'wrap',
-	gap: '10px'
-})
+	gap: '10px',
+});
 const TagItem = styled('div')({
 	background: '#FFFFFF0D',
 	padding: '8px 16px',
-	borderRadius: '40px'
-})
+	borderRadius: '40px',
+});
