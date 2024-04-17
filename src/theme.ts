@@ -11,6 +11,12 @@ const roboto = Roboto({
 const theme = createTheme({
 	palette: {
 		mode: 'dark',
+		primary: {
+			main: '#5B64F8',
+		},
+		secondary: {
+			main: '#8C92FA',
+		},
 	},
 	typography: {
 		fontFamily: roboto.style.fontFamily,

@@ -3,8 +3,8 @@
 
 import {
 	Box,
-	Button,
 	Chip,
+	FormControl,
 	MenuItem,
 	OutlinedInput,
 	Select,
@@ -12,6 +12,7 @@ import {
 	styled,
 	TextField,
 } from '@mui/material';
+import LoadingButton from '@mui/lab/LoadingButton';
 import React, { useMemo, useState } from 'react';
 import { createAttestation } from '@/common/sp/signProtocol';
 import { closeGlobalLoading, openGlobalLoading } from '@/store/utils';
@@ -41,6 +42,8 @@ const SignProtocol = (props: IProps) => {
 	const [name, setName] = useState('');
 	const [wallet, setWallet] = useState('');
 
+	const [loading, setLoading] = useState(false);
+
 	const { data } = useSWR('/api/tag/all', () => getAllTags());
 
 	const allTags = useMemo(() => {
@@ -68,60 +71,88 @@ const SignProtocol = (props: IProps) => {
 	const onClear = () => {
 		setName('');
 		setWallet('');
+		setTags([]);
 	};
 	const onCreateAttestation = async () => {
-		if (!name || !wallet) return;
+		if (!name || !wallet || tags.length === 0) return;
 		try {
-			openGlobalLoading();
+			// openGlobalLoading();
+			setLoading(true);
 			const res = await createAttestation({ name, wallet, tags: tags }, chainId);
 			console.log('Attestation Result', res);
 			onClear();
 			await mutate(`queryAttestations/${schemaId}`);
 		} catch (err) {
 		} finally {
-			closeGlobalLoading();
+			// closeGlobalLoading();
+			setLoading(false);
 		}
 	};
 	return (
 		<FormContainer>
-			<TextField
-				variant={'outlined'}
-				value={name}
-				onChange={handleNameChange}
-				placeholder={'nickname'}
-			/>
-			<TextField
-				value={wallet}
-				onChange={handleWalletChange}
-				placeholder={'wallet address'}
-			/>
-			<Select
-				labelId="demo-multiple-chip-label"
-				id="demo-multiple-chip"
-				multiple
-				value={tags}
-				onChange={handleChange}
-				disabled={!allTags || allTags.length === 0}
-				input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
-				renderValue={(selected) => (
-					<Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-						{selected.map((value) => (
-							<Chip key={value} label={value} />
+			<StyledFlexBox>
+				<TextField
+					variant={'outlined'}
+					value={name}
+					onChange={handleNameChange}
+					placeholder={'Nickname'}
+					sx={{
+						width: '300px',
+						'& .MuiOutlinedInput-root': {
+							borderRadius: '30px',
+						},
+					}}
+				/>
+				<TextField
+					value={wallet}
+					onChange={handleWalletChange}
+					placeholder={'Wallet Address'}
+					sx={{
+						marginLeft: '30px',
+						flex: '1',
+						'& .MuiOutlinedInput-root': {
+							borderRadius: '30px',
+						},
+					}}
+				/>
+			</StyledFlexBox>
+			<StyledFlexBox>
+				<FormControl sx={{ flex: '1' }}>
+					<Select
+						sx={{ flex: '1', borderRadius: '80px' }}
+						multiple
+						displayEmpty
+						inputProps={{ 'aria-label': 'Without label' }}
+						value={tags}
+						onChange={handleChange}
+						disabled={!allTags || allTags.length === 0}
+						input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+						renderValue={(selected) => (
+							<Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+								{selected.map((value) => (
+									<Chip key={value} label={value} />
+								))}
+							</Box>
+						)}
+						MenuProps={MenuProps}
+						placeholder={'select your endorsement'}
+					>
+						{allTags?.map((tag) => (
+							<MenuItem key={tag.id} value={tag.name}>
+								{tag.name}
+							</MenuItem>
 						))}
-					</Box>
-				)}
-				MenuProps={MenuProps}
-				placeholder={'select your endorsement'}
-			>
-				{allTags?.map((tag) => (
-					<MenuItem key={tag.id} value={tag.name}>
-						{tag.name}
-					</MenuItem>
-				))}
-			</Select>
-			<Button variant={'contained'} onClick={onCreateAttestation} size={'large'}>
-				Endorse
-			</Button>
+					</Select>
+				</FormControl>
+				<StyledButton
+					variant={'contained'}
+					onClick={onCreateAttestation}
+					size={'large'}
+					loading={loading}
+				>
+					Endorse
+				</StyledButton>
+			</StyledFlexBox>
 		</FormContainer>
 	);
 };
@@ -134,4 +165,21 @@ const FormContainer = styled('div')({
 	flexDirection: 'column',
 	width: '100%',
 	gap: '20px',
+});
+
+const StyledFlexBox = styled('div')({
+	display: 'flex',
+	alignItems: 'center',
+	justifyContent: 'space-between',
+});
+
+const StyledButton = styled(LoadingButton)({
+	width: '300px',
+	height: '65px',
+	marginLeft: '20px',
+	borderRadius: '30px',
+	background: 'linear-gradient(45deg, #5d65f9, #b064fe)',
+	color: '#fff',
+	fontSize: '20px',
+	fontWeight: 'bold',
 });

@@ -21,15 +21,14 @@ const MainLayout = ({
 					height: '64px',
 					boxShadow: 'none',
 					backgroundColor: 'transparent',
+					backgroundImage: 'none'
 				}}
 				enableColorOnDark={true}
 			>
 				<Account />
 			</AppBar>
 
-			<ContentContainer>
-				{children}
-			</ContentContainer>
+			<ContentContainer>{children}</ContentContainer>
 		</MainContainer>
 	);
 };
@@ -43,7 +42,7 @@ const MainContainer = styled('div')({
 	alignItems: 'center',
 	paddingTop: '80px',
 	minHeight: '100vh',
-	width: '1400px',
+	width: '1000px',
 	margin: '0 auto',
 	backgroundImage: 'url(/images/bg.png)',
 	backgroundRepeat: 'no-repeat',

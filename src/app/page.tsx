@@ -11,7 +11,6 @@ export default function Home() {
 				<Image src={'/images/textLogo.png'} width={425} height={72} alt={'endorse'} />
 			</div>
 			<SignProtocol />
-			<Tag />
 			<AttestationList />
 		</MainLayout>
 	);
