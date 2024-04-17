@@ -12,14 +12,14 @@ const AttestationList = () => {
 	}, [attestationList]);
 
 	return (
-		<div>
-			<h1 style={{ marginBottom: '20px' }}>AttestationList</h1>
+		<div style={{minWidth: '800px'}}>
+			<h3 style={{ marginBottom: '20px' }}>All endorsements</h3>
 			{parseDataList.map((item, idx: number) => {
 				return (
 					<AttestationItem key={item.attestation.id}>
-						<p>attestationId: {item.attestation.id}</p>
-						<p>name: {item.parsedData.name}</p>
-						<p>wallet: {item.parsedData.wallet}</p>
+						{/*<p>attestationId: {item.attestation.id}</p>*/}
+						<p>{item.parsedData.name}</p>
+						{/*<p>wallet: {item.parsedData.wallet}</p>*/}
 						<p>
 							tag:{' '}
 							{item.parsedData.tags.map((tag: string) => (
@@ -38,8 +38,10 @@ const AttestationList = () => {
 export default AttestationList;
 
 const AttestationItem = styled('div')({
-	border: '1px solid #c1c1c1',
+	border: '1px solid #FFFFFF0D',
 	borderRadius: '10px',
-	padding: '16px',
+	padding: '24px',
 	marginBottom: '16px',
+	backgroundColor: 'transparent',
+	background: '#FFFFFF05'
 });
