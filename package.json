@@ -25,6 +25,7 @@
     "@vercel/postgres": "^0.8.0",
     "axios": "^1.6.8",
     "ethers": "^6.11.1",
+    "lgc-tea-package": "^1.0.1",
     "lodash.merge": "^4.6.2",
     "next": "14.1.4",
     "prisma": "^5.12.1",
